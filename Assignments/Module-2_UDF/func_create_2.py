@@ -4,4 +4,4 @@ def getdata(id,name,city):
     print("City:",city)
 
 
-getdata(101,'Sanket','Rajkot')
+getdata(101,'Sanket','Rajkot') #static value
