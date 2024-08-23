@@ -1,9 +1,0 @@
-ID:101
-Name:Sanket
-City:Rajkot
-ID:102
-Name:Nirav
-City:Baroda
-ID:103
-Name:Ashok
-City:Jamnagar
