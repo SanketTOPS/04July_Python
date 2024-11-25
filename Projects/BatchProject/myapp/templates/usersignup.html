@@ -54,6 +54,12 @@
     <div class="container my-5">
         <h2 style="text-align: center;">Signup</h2>
         <hr>
+        {% if msg %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{msg}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
         <form method="post" class="row g-3 needs-validation" novalidate>
             {% csrf_token %}
             <div class="col-md-6">
