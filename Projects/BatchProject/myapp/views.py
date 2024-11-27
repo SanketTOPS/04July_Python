@@ -18,10 +18,14 @@ def userlogin(request):
         pas=request.POST['password']
 
         user=userSignup.objects.filter(username=unm,password=pas)
+
+        uid=userSignup.objects.get(username=unm)
+        print("UserID:",uid.id)
         if user:
             print("Login successfully!")
             msg="Login successfully!"
             request.session['user']=unm
+            request.session['uid']=uid.id
             return redirect('/')
         else:
             print("Error!Login faild...")
@@ -55,6 +59,7 @@ def usersignup(request):
                 
                 #send_mail(subject="Your One Time Password",message=f"Hello User!\n\nThanks for registration with us!\n\nYour one time password is {otp}.\n\nThanks & Regards!\nNotesApp Tech - Rajkot\n+91 97247 99469 | sanket@tops-int.com",from_email=settings.EMAIL_HOST_USER,recipient_list=['kishantoliya4@gmail.com','meetladva1684@gmail.com','kevalkotadiya509@gmail.com','pratixagoswami2000@gmail.com','k.p.jogi89@gmail.com','radhikapithadia123@gmail.com'])
                 return redirect('otpverify')
+        
         else:
             print(newReq.errors)
     return render(request,'usersignup.html',{'msg':msg})
@@ -72,12 +77,36 @@ def contact(request):
     return render(request,'contact.html',{'user':user})
 
 def notes(request):
+    msg=""
     user=request.session.get('user')
-    return render(request,'notes.html',{'user':user})
+    if request.method=='POST':
+        newNotes=notesForm(request.POST,request.FILES)
+        if newNotes.is_valid():
+            newNotes.save()
+            print("Your notes has been submitted")
+            msg="Your notes has been submitted"
+        else:
+            print(newNotes.errors)
+            msg="Error!Somthing went wrong...Try again!"
+    return render(request,'notes.html',{'user':user,'msg':msg})
 
 def profile(request):
+    msg=""
     user=request.session.get('user')
-    return render(request,'profile.html',{'user':user})
+    uid=request.session.get('uid')
+    cuser=userSignup.objects.get(id=uid)
+    if request.method=='POST':
+        updateReq=updateform(request.POST,instance=cuser)
+        if updateReq.is_valid():
+            updateReq.save()
+            
+            print("Your profile has been updated!")
+            msg="Your profile has been updated!"
+            return redirect('/')
+        else:
+            print(updateReq.errors)
+            msg="Error!Something went wrong...Try again!"
+    return render(request,'profile.html',{'user':user,'cuser':cuser,'msg':msg})
 
 def otpverify(request):
     msg=""

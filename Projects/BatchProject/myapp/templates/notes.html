@@ -43,9 +43,11 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Notes</a>
                     </li>
+                    {% if user %}
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
                     </li>
+                    {% endif %}
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -72,7 +74,37 @@
         </div>
     </nav>
     <!-- Navbar End -->
-    <h1 style="text-align:center ;">This is Notes Page</h1>
+
+    <!-- Notes Form Start -->
+    <div class=" container my-2">
+        <h2 style="text-align: center;">Submit your Notes</h2>
+        <hr>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Query Title</label>
+                <input type="text" name="title" class="form-control" id="exampleFormControlInput1">
+            </div>
+            <select class="form-select form-select-lg mb-3" name="cate" aria-label="Large select example">
+                <option selected>Select your technoloy</option>
+                <option>Python</option>
+                <option>Java</option>
+                <option>PHP</option>
+                <option>Android / iOS</option>
+                <option>Other</option>
+            </select>
+            <div>
+                <label for="formFileLg" class="form-label">Upload your file's</label>
+                <input class="form-control form-control-lg" name="myfile" id="formFileLg" type="file">
+            </div>
+            <div class="mb-3 my-2">
+                <label for="exampleFormControlTextarea1" class="form-label">Describe your error</label>
+                <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-warning btn-lg">Submit Notes</button>
+        </form>
+    </div>
+    <!-- Notes Form End -->
 </body>
 
 </html>
