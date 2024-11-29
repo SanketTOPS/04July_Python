@@ -74,6 +74,20 @@ def about(request):
 
 def contact(request):
     user=request.session.get('user')
+    if request.method=='POST':
+        newCont=contactForm(request.POST)
+        if newCont.is_valid():
+            newCont.save()
+            print("Your response has been submitted!")
+
+            #Email Sending
+            sub="Thankyou!"
+            msg=f"Hello User!\n\nThanks for connecting with us!\nWe will contact you shortly!\n\nThanks & Regards\n+919724799469 | sanket.tops@gmail.com"
+            from_ID=settings.EMAIL_HOST_USER
+            to_ID=[request.POST['email']]
+            send_mail(subject=sub,message=msg,from_email=from_ID,recipient_list=to_ID)
+        else:
+            print(newCont.errors)
     return render(request,'contact.html',{'user':user})
 
 def notes(request):
