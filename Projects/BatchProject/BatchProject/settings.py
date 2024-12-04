@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-20d^011y&l_q#=v(*c2zcd(+@8_axkni02m978bvwrug@(vbzg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
+
+    #django-allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    
 ]
 
 MIDDLEWARE = [
@@ -48,6 +55,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #django-allauth
+    'allauth.account.middleware.AccountMiddleware',
+]
+
+#django-allauth
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default ModelBackend
+    'allauth.account.auth_backends.AuthenticationBackend',  # Allauth authentication backend for social authentication
 ]
 
 ROOT_URLCONF = 'BatchProject.urls'
@@ -139,3 +154,18 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = '17sepdm@gmail.com'
 EMAIL_HOST_PASSWORD = 'jgwo zhcn ybhi xtji'
+
+
+#django-allauth
+LOGIN_REDIRECT_URL = '/'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'APP': {
+            'client_id': '961229979629-hjiap20iu5ofrkdr13m5cu5q0ac3h26o.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
