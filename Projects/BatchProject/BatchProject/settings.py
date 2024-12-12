@@ -38,14 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myapp',
-
-    #django-allauth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    
+    'myapp',    
 ]
 
 MIDDLEWARE = [
@@ -56,14 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #django-allauth
-    'allauth.account.middleware.AccountMiddleware',
-]
-
-#django-allauth
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',  # Default ModelBackend
-    'allauth.account.auth_backends.AuthenticationBackend',  # Allauth authentication backend for social authentication
+   
 ]
 
 ROOT_URLCONF = 'BatchProject.urls'
@@ -158,20 +144,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = '17sepdm@gmail.com'
 EMAIL_HOST_PASSWORD = 'jgwo zhcn ybhi xtji'
 
-
-#django-allauth
-LOGIN_REDIRECT_URL = '/'
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': ['profile', 'email'],
-        'APP': {
-            'client_id': '961229979629-hjiap20iu5ofrkdr13m5cu5q0ac3h26o.apps.googleusercontent.com',
-            'secret': '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',
-            'key': ''
-        }
-    }
-}
 
 
 JAZZMIN_SETTINGS = {
