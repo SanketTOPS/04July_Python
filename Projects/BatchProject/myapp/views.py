@@ -4,6 +4,7 @@ from django.contrib.auth import logout
 from django.core.mail import send_mail
 import random
 from BatchProject import settings
+import requests
 
 # Create your views here.
 
@@ -51,11 +52,22 @@ def usersignup(request):
                 #Email Sending Code
                 global otp
                 otp=random.randint(11111,99999)
-                sub="Your One Time Password"
+
+                #Mobile OTP Sending Code
+                url = "https://www.fast2sms.com/dev/bulkV2"
+
+                querystring = {"authorization":"","variables_values":f"{otp}","route":"otp","numbers":"9327095039,9106903090,9586974648,9737439749,8866399207,9428415606"}
+                headers = {
+                    'cache-control': "no-cache"
+                }
+                response = requests.request("GET", url, headers=headers, params=querystring)
+                print(response.text)
+
+                """sub="Your One Time Password"
                 msg=f"Hello User!\n\nThanks for registration with us!\n\nYour one time password is {otp}.\n\nThanks & Regards!\nNotesApp Tech - Rajkot\n+91 97247 99469 | sanket@tops-int.com"
                 from_ID=settings.EMAIL_HOST_USER
                 to_ID=[request.POST['username']]
-                send_mail(subject=sub,message=msg,from_email=from_ID,recipient_list=to_ID)
+                send_mail(subject=sub,message=msg,from_email=from_ID,recipient_list=to_ID)"""
                 
                 #send_mail(subject="Your One Time Password",message=f"Hello User!\n\nThanks for registration with us!\n\nYour one time password is {otp}.\n\nThanks & Regards!\nNotesApp Tech - Rajkot\n+91 97247 99469 | sanket@tops-int.com",from_email=settings.EMAIL_HOST_USER,recipient_list=['kishantoliya4@gmail.com','meetladva1684@gmail.com','kevalkotadiya509@gmail.com','pratixagoswami2000@gmail.com','k.p.jogi89@gmail.com','radhikapithadia123@gmail.com'])
                 return redirect('otpverify')
